@@ -43,7 +43,7 @@ class SQLiteRepository:
 
             self.conn.commit()
             logger.info(
-                f"✅ Successfully inserted paper: '{paper.arxiv_paper.title}' (ID: {cursor.lastrowid})"
+                f"✅ Successfully inserted paper: '{paper.arxiv_paper.title}' (ID: {paper.arxiv_paper.id})"
             )
 
         except Exception as e:

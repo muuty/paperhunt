@@ -12,11 +12,12 @@ load_dotenv()
 
 PAPER_DATABASE_PATH = "papers.db"
 GEMINI_API_KEY_PATH = "GEMINI_API_KEY"
+MAX_RESULTS = 10
 
 
 class PaperHuntingJob:
     def __init__(self):
-        self.crawler = ArxivCrawler(client=arxiv.Client())
+        self.crawler = ArxivCrawler(client=arxiv.Client(), max_results=MAX_RESULTS)
         self.summary_ai = GeminiAI(api_key=os.environ.get(GEMINI_API_KEY_PATH))
         self.repository = SQLiteRepository(db_path=PAPER_DATABASE_PATH)
 

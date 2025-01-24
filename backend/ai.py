@@ -47,13 +47,17 @@ class GeminiAI:
         )
         summary_text = response.text
 
-        research_questions_pattern = r"(?s)1\. Research questions(.*?)(?=2\. Main contributions|$)"
+        research_questions_pattern = (
+            r"(?s)1\. Research questions(.*?)(?=2\. Main contributions|$)"
+        )
         contributions_pattern = (
             r"(?s)2\. Main contributions(.*?)(?=3\. Experimental setup and baselines|$)"
         )
         experiments_pattern = r"(?s)3\. Experimental setup and baselines(.*)$"
 
-        research_questions_text = self._extract(research_questions_pattern, summary_text)
+        research_questions_text = self._extract(
+            research_questions_pattern, summary_text
+        )
         contributions_text = self._extract(contributions_pattern, summary_text)
         experiments_text = self._extract(experiments_pattern, summary_text)
 
