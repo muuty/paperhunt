@@ -2,7 +2,7 @@ title: paperhunt
 email: muuty.me@gmail.com
 description: >-
   Crawl and Summarize Arxiv papers in your research topics.
-baseurl: "paperhunt" 
+baseurl: "/paperhunt" 
 url: "https://muuty.github.io"
 github_username: muuty
 

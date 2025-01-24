@@ -1,7 +1,7 @@
 class Repository {
   static instance;
 
-  constructor(dbPath = "/assets/db/papers.db") {
+  constructor(dbPath = "/paperhunt/assets/db/papers.db") {
     if (Repository.instance) return Repository.instance;
     this.db = null;
     this.dbPath = dbPath;
