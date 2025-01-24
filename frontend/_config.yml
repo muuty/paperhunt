@@ -1,0 +1,10 @@
+title: paperhunt
+email: muuty.me@gmail.com
+description: >-
+  Crawl and Summarize Arxiv papers in your research topics.
+baseurl: "" 
+url: "https://paperhunt.muuty.me"
+github_username: muuty
+
+include:
+  - db/papers.db
