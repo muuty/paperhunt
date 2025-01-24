@@ -4,7 +4,7 @@ import re
 import google.generativeai as genai
 import httpx
 
-from backend.entity import Summary
+from entity import Summary
 
 SUMMARY_PROMPT = """
         Please summarize the following three points from the text:

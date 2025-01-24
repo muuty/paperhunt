@@ -1,8 +1,8 @@
 import logging
 import sqlite3
 
-from backend.entity import PaperWithSummary
-from backend.query import CREATE_TABLE_QUERY, INSERT_INTO_QUERY
+from entity import PaperWithSummary
+from query import CREATE_TABLE_QUERY, INSERT_INTO_QUERY
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
