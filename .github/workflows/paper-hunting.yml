@@ -1,6 +1,9 @@
 name: Update Papers DB
 
 on:
+  push:
+    branches:
+      - '*'
   schedule:
     - cron: "0 0 * * *"  # 매일 00:00 UTC에 실행
   workflow_dispatch: 
