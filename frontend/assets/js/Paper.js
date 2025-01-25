@@ -42,10 +42,10 @@ class Paper {
             <div class="paper-contents-container">
                 <div class="paper-header">
                     ${categoryContainer.outerHTML}
+                    <span class="paper-date">${this.formatDate(this.published_at)}</span>
                     <div class="paper-title-container">
                         <h3 class="paper-title">${this.title}</h3>
                     </div>
-                    <span class="paper-date">${this.formatDate(this.published_at)}</span>
                 </div>
                 <p class="paper-abstract">${this.abstract}</p>
                 <div class="paper-details">
@@ -98,15 +98,17 @@ class Paper {
             ex) data = "-keyword1:description1\n- keyword2:description2"
             to <li>keyword1: description1</li><li>keyword2: description2</li> 
         */
-        return data
-            .split("\n")
-            .map(line => line.trim())
-            .filter(line => line)
-            .map(line => {
-                const content = line.startsWith("-") ? line.slice(1).trim() : line;
-                return `<li>${content}</li>`;
-            })
-            .join("");
+       return data
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line.includes(":")) // ":"가 없는 줄은 무시
+        .map(line => {
+            const content = line.startsWith("-") ? line.slice(1).trim() : line;
+            const [keyword, ...description] = content.split(":"); // 첫 부분을 키워드로, 나머지는 설명으로
+            return `<li><strong>${keyword.trim()}</strong>:${description.join(":").trim()}</li>`;
+        })
+        .join("");
+
     };
 
     formatDate(dateString) {
