@@ -1,5 +1,5 @@
 class Paper {
-    constructor(id, title, authors, primary_category, categories, abstract, published_at, pdf_url, research_questions, contributions, experiments){
+    constructor(id, title, authors, primary_category, categories, abstract, published_at, pdf_url, research_questions, contributions, experiments) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -28,7 +28,7 @@ class Paper {
         const categoryContainer = document.createElement("div");
         categoryContainer.classList.add("category-container");
         categoryContainer.appendChild(arxivLink);
-        
+
         JSON.parse(this.categories || "[]").forEach(category => {
             const categoryTag = document.createElement("span");
             categoryTag.classList.add("category-tag");
@@ -61,11 +61,11 @@ class Paper {
             </div>
             <div class="toggle-bar">▼</div> 
         `;
-    
+
         const toggleButton = container.querySelector(".toggle-bar");
         const details = container.querySelector(".paper-details");
         const abstract = container.querySelector(".paper-abstract");
-        
+
         toggleButton.addEventListener("click", () => {
             const isOpen = details.style.maxHeight;
             if (!isOpen || isOpen === "0px") {
@@ -78,7 +78,7 @@ class Paper {
                 toggleButton.textContent = "▼";
             }
         });
-    
+
         return container;
     }
 
@@ -87,7 +87,7 @@ class Paper {
         for (let i = 0; i < category.length; i++) {
             hash = category.charCodeAt(i) + ((hash << 5) - hash);
         }
-        const hue = Math.abs(hash) % 360; 
+        const hue = Math.abs(hash) % 360;
         return `hsl(${hue}, 60%, 75%)`;
     }
 
