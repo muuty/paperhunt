@@ -2,9 +2,9 @@ import json
 
 import arxiv
 
-from backend.entity import ArxivPaper
+from entity import ArxivPaper
 
-ARXIV_TEXONOMY = json.loads(open("./arxiv_texonomy.json", "r").read())
+ARXIV_TEXONOMY = json.loads(open("backend/arxiv_texonomy.json", "r").read())
 
 
 class ArxivCrawler:

@@ -1,0 +1,50 @@
+name: Update Papers DB
+
+on:
+  push:
+    branches:
+      - '*'
+  schedule:
+    - cron: "0 0 * * *"  # 매일 00:00 UTC에 실행
+  workflow_dispatch: 
+
+jobs:
+  update-db:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install uv
+          uv sync
+
+      - name: Run Paper Hunting Job
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: uv run backend/job.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit and push if papers.db has changed
+        run: |
+          git add papers.db
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🔄 Update papers.db (automated)"
+            git push origin HEAD:main
+          fi

@@ -3,10 +3,10 @@ import os
 import arxiv
 from dotenv import load_dotenv
 
-from backend.ai import GeminiAI
-from backend.crawler import ArxivCrawler
-from backend.entity import PaperWithSummary
-from backend.repository import SQLiteRepository
+from ai import GeminiAI
+from crawler import ArxivCrawler
+from entity import PaperWithSummary
+from repository import SQLiteRepository
 
 load_dotenv()
 
