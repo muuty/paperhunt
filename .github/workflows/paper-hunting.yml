@@ -17,8 +17,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false  # push를 위한 GitHub token 사용
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,14 +36,11 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Actions"
+          git config --global user.name "github-actions[bot]"
           git config --global user.email "actions@github.com"
 
       - name: Commit and push if papers.db has changed
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
           git add papers.db
           if git diff --cached --quiet; then
             echo "No changes to commit"
@@ -53,5 +48,3 @@ jobs:
             git commit -m "🔄 Update papers.db (automated)"
             git push origin HEAD:main
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
