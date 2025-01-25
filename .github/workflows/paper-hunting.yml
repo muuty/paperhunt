@@ -1,4 +1,4 @@
-name: Update Papers DB
+name: Crawl Arxiv Paper and Summarize
 
 on:
   push:
