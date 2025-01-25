@@ -32,7 +32,7 @@ jobs:
       - name: Run Paper Hunting Job
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python backend/job.py  
+        run: uv run backend/job.py
 
       - name: Configure Git
         run: |
