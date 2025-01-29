@@ -6,6 +6,7 @@ import httpx
 
 from entity import Summary
 
+MAX_FILE_SIZE = 20971520  # 20MB
 SUMMARY_PROMPT = """
         Please summarize the following three points from the text:
 
@@ -35,17 +36,37 @@ SUMMARY_PROMPT = """
 """
 
 
+class GeminiException(Exception):
+    pass
+
+
 class GeminiAI:
     def __init__(self, api_key: str):
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel("gemini-1.5-flash")
 
+    def _get_summary_response(self, pdf_url: str) -> str:
+        with httpx.stream("GET", pdf_url) as response:
+            file_size = int(response.headers.get("content-length", 0))
+
+            if file_size > MAX_FILE_SIZE:
+                print(
+                    f"Skipping {pdf_url}: File size {file_size} bytes exceeds 20MB limit."
+                )
+                raise GeminiException("File size exceeds 20MB limit.")
+
+            doc_data = base64.standard_b64encode(response.read()).decode("utf-8")
+
+        try:
+            response = self.model.generate_content(
+                [{"mime_type": "application/pdf", "data": doc_data}, SUMMARY_PROMPT]
+            )
+            return response.text
+        except Exception as e:
+            raise GeminiException(f"Error processing {pdf_url}: {e}")
+
     def summarize(self, pdf_url: str) -> Summary:
-        doc_data = base64.standard_b64encode(httpx.get(pdf_url).content).decode("utf-8")
-        response = self.model.generate_content(
-            [{"mime_type": "application/pdf", "data": doc_data}, SUMMARY_PROMPT]
-        )
-        summary_text = response.text
+        summary_text = self._get_summary_response(pdf_url)
 
         research_questions_pattern = (
             r"(?s)1\. Research questions(.*?)(?=2\. Main contributions|$)"

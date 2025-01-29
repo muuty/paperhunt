@@ -1,11 +1,12 @@
 import json
+import logging
 import os
 import sys
 
 import arxiv
 from dotenv import load_dotenv
 
-from ai import GeminiAI
+from ai import GeminiAI, GeminiException
 from crawler import ArxivCrawler
 from entity import PaperWithSummary
 from repository import SQLiteRepository
@@ -15,6 +16,8 @@ load_dotenv()
 PAPER_DATABASE_PATH = "papers.db"
 GEMINI_API_KEY_PATH = "GEMINI_API_KEY"
 MAX_RESULTS = 10
+
+logger = logging.getLogger(__name__)
 
 
 class PaperHuntingJob:
@@ -29,8 +32,11 @@ class PaperHuntingJob:
 
             for paper in papers:
                 if not self.repository.is_paper_already_inserted(paper.id):
-                    summary = self.summary_ai.summarize(paper.pdf_url)
-                    self.repository.insert_paper(PaperWithSummary(paper, summary))
+                    try:
+                        summary = self.summary_ai.summarize(paper.pdf_url)
+                        self.repository.insert_paper(PaperWithSummary(paper, summary))
+                    except GeminiException as e:
+                        logger.error(e)
 
 
 if __name__ == "__main__":
