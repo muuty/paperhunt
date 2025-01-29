@@ -16,6 +16,7 @@ lint-backend:
 format-backend:
 	@echo "Running formatting..."
 	uv run ruff format backend
+	uv run isort backend
 
 format-javascript:
 	@echo "Beautifying Javascript files..."
