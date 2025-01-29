@@ -1,4 +1,6 @@
+import json
 import os
+import sys
 
 import arxiv
 from dotenv import load_dotenv
@@ -32,5 +34,8 @@ class PaperHuntingJob:
 
 
 if __name__ == "__main__":
+    keywords_json = sys.argv[1]
+    keywords = json.loads(keywords_json)
+
     job = PaperHuntingJob()
-    job.hunt_papers(["traffic prediction"])
+    job.hunt_papers(keywords)

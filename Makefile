@@ -7,8 +7,7 @@ install:
 # Run paper crawling job
 crawl:
 	@echo "Running Paper crawling job..."
-	uv run backend/job.py
-
+	uv run backend/job.py "$$(jq -c . keywords.json)"
 
 lint-backend:
 	@echo "Running lint..."
