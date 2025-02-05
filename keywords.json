@@ -1,3 +1,3 @@
 {
-  "keywords": ["traffic prediction", "experience replay", "continual learning"]
+  "keywords": ["traffic prediction", "experience replay", "continual learning", "coreset selection", "data pruning", "dataset distillation"]
 }
