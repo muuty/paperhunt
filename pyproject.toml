@@ -9,6 +9,7 @@ dependencies = [
     "google-generativeai>=0.8.4",
     "httpx>=0.28.1",
     "python-dotenv>=1.0.1",
+    "grpc==1.67.1", # https://discuss.ai.google.dev/t/warning-all-log-messages-before-absl-initializelog-is-called-are-written-to-stderr-e0000-001731955515-629532-17124-init-cc-229-grpc-wait-for-shutdown-with-timeout-timed-out/50020/15
 ]
 
 [dependency-groups]
